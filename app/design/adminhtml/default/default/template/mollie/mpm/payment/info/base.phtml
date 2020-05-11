@@ -43,6 +43,9 @@ $status = $this->getPaymentStatus();
                 <img src="<?= $img ?>"/>
             <?php endif; ?>
             <?php echo $this->escapeHtml($this->getMethod()->getTitle()) ?>
+            <?php if (($cardlabel = $this->getcardLabel())): ?>
+                (<?php echo $this->escapeHtml($cardlabel) ?>)
+            <?php endif; ?>
         </p>
         <table class="form-list">
             <?php if ($checkoutType = $this->getCheckoutType()): ?>
@@ -57,7 +60,13 @@ $status = $this->getPaymentStatus();
                     <td class="value"><?= $checkoutUrl; ?></td>
                 </tr>
             <?php endif; ?>
-            <?php if (($expiresAt = $this->getExpiresAt()) && ($status == 'created' || $status == 'open')): ?>
+            <?php if ($lasttransid = $this->getLastTransId()): ?>
+                <tr>
+                    <td class="label"><?= $this->__('Transaction Id'); ?></td>
+                    <td class="value"><a href="https://www.mollie.com/dashboard/org_2368781/payments/<?= $lasttransid; ?>" target="_blank"><?= $lasttransid; ?></a></td>
+                </tr>
+            <?php endif; ?>
+           <?php if (($expiresAt = $this->getExpiresAt()) && ($status == 'created' || $status == 'open')): ?>
                 <tr>
                     <td class="label"><?= $this->__('Valid Until'); ?></td>
                     <td class="value"><?= $expiresAt; ?></td>

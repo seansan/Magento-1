@@ -65,6 +65,36 @@ class Mollie_Mpm_Block_Payment_Info_Base extends Mage_Payment_Block_Info
     /**
      * @return string
      */
+    public function getcardLabel()
+    {
+        try {
+            $details = json_decode($this->getInfo()->getAdditionalInformation('details'));
+            if (isset($details->cardLabel)) {
+                return $details->cardLabel;
+            }
+        } catch (\Exception $e) {
+            $this->mollieHelper->addTolog('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastTransId()
+    {
+        try {
+            $lasttransid = $this->getInfo()->getLastTransId();
+            if (isset($lasttransid)) {
+                return $lasttransid;
+            }
+        } catch (\Exception $e) {
+            $this->mollieHelper->addTolog('error', $e->getMessage());
+        }
+    }
+
+    /**
+     * @return string
+     */
     public function getExpiresAt()
     {
         try {

@@ -45,6 +45,8 @@ $status = $this->getPaymentStatus();
             <?php echo $this->escapeHtml($this->getMethod()->getTitle()) ?>
             <?php if (($cardlabel = $this->getcardLabel())): ?>
                 (<?php echo $this->escapeHtml($cardlabel) ?>)
+            <?php else: ?>
+                (<?php echo 'Type known after payment'; ?>)
             <?php endif; ?>
         </p>
         <table class="form-list">
@@ -64,6 +66,11 @@ $status = $this->getPaymentStatus();
                 <tr>
                     <td class="label"><?= $this->__('Transaction Id'); ?></td>
                     <td class="value"><a href="https://www.mollie.com/dashboard/org_2368781/payments/<?= $lasttransid; ?>" target="_blank"><?= $lasttransid; ?></a></td>
+                </tr>
+            <?php else: ?>
+                <tr>
+                    <td class="label"><?= $this->__('Transaction Id'); ?></td>
+                    <td class="value">Not paid yet</td>
                 </tr>
             <?php endif; ?>
            <?php if (($expiresAt = $this->getExpiresAt()) && ($status == 'created' || $status == 'open')): ?>
